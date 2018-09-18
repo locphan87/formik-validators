@@ -1,7 +1,5 @@
 # Formik Validators
 
-**WARNINGS**: It hasn't been fully tested. Use it with caution.
-
 ## Basic usage
 
 ```js
@@ -33,9 +31,33 @@ Example: using I18n.t as a translate function
 import I18n from 'react-native-i18n'
 import validator, { setTranslateFn } from 'formik-validators'
 
-setTranslateFn(I18n.t)
+setTranslateFn((term, params) => I18n.t(term, params))
 
 export default validator
+```
+
+```js
+// ../../forms/index.js
+export { default as validator } from './validator'
+export * from './forms.components'
+```
+
+```js
+// myModule.form.js
+import { validators, TextInput } from '../../forms'
+import { required, minLength, getFieldProps } from 'formik-validators'
+const InnerForm = props => {
+  const fieldProps = getFieldProps(props)
+  return (
+    <View>
+      <TextInput
+        {...fieldProps}
+        name={'userName'}
+        placeholder={'Username'}
+      />
+    </View>
+  )
+}
 ```
 
 ## Add new validation rules
