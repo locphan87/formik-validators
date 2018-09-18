@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "strictFunctionTypes": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es2015",
+    "module": "commonjs",
+    "declaration": false,
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "strict": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude":[
+    "dist",
+    "node_modules"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "formik-validators",
+  "version": "0.0.1",
+  "description": "Reusable validators fro formik",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "formik",
+    "validators"
+  ],
+  "author": "Loc Phan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ramda": "0.25.38",
+    "ramda": "^0.25.0",
+    "ramda-adjunct": "2.10.0",
+    "typescript": "3.0.3"
+  }
+}
