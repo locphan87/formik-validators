@@ -1,6 +1,6 @@
 {
   "name": "formik-validators",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Reusable validators fro formik",
   "main": "dist/index.js",
   "files": [
