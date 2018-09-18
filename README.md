@@ -1,5 +1,7 @@
 # Formik Validators
 
+**WARNINGS**: It hasn't been fully tested. Use it with caution.
+
 ## Basic usage
 
 ```js
