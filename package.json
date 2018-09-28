@@ -1,21 +1,27 @@
 {
   "name": "formik-validators",
   "version": "0.0.2",
-  "description": "Reusable validators fro formik",
+  "description": "Reusable validators for formik",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:phanhoangloc/formik-validators.git"
+  },
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "react",
+    "form",
     "formik",
     "validators"
   ],
-  "author": "Loc Phan",
+  "author": "Loc Phan <phanhoangloc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/ramda": "0.25.38",
