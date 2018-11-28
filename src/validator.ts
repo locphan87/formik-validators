@@ -4,12 +4,14 @@ import {
   head,
   is,
   map,
-  filter
+  filter,
+  path,
+  split
 } from 'ramda'
 import { isString } from 'ramda-adjunct'
 
 type RuleInput = {
-  value: string,
+  value: string | undefined,
   values: object,
   props: object
 }
@@ -22,9 +24,9 @@ type Config = {
 const validator = (config: Config) => (values: object, props: object) =>
   keys(config).reduce((errors, fieldName) => {
     const ruleInput: RuleInput = {
-      value: values[fieldName],
       values,
-      props
+      props,
+      value: path(split(/\]?\.|\[/, String(fieldName)), values)
     }
     const firstError = compose(
       // @ts-ignore
