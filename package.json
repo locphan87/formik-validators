@@ -12,8 +12,11 @@
   },
   "scripts": {
     "prebuild": "rm -rf dist",
+    "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
+    "prettier": "prettier --write 'src/**/*.ts'",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest ./tests/",
+    "test:watch": "jest ./tests/ --watch"
   },
   "keywords": [
     "react",
@@ -24,9 +27,15 @@
   "author": "Loc Phan <phanhoangloc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "23.3.12",
     "@types/ramda": "0.25.38",
+    "formik": "1.4.2",
+    "jest": "23.6.0",
+    "prettier": "1.15.3",
     "ramda": "^0.25.0",
     "ramda-adjunct": "2.10.0",
-    "typescript": "3.0.3"
+    "react": "16.7.0",
+    "ts-jest": "23.10.5",
+    "typescript": "3.2.2"
   }
 }
