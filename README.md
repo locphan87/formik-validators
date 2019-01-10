@@ -2,6 +2,20 @@
 
 Reusable field-level form validators for `formik`, support i18n
 
+Table of Contents
+=================
+
+* [Getting started](#getting-started)
+* [Basic usage](#basic-usage)
+* [Custom the translate function](#custom-the-translate-function)
+* [Add new validation rules](#add-new-validation-rules)
+
+## Getting started
+
+```sh
+$ yarn add formik-validators
+```
+
 ## Basic usage
 
 ```ts
@@ -16,6 +30,14 @@ const MyForm = withFormik({
     ]
   })
 })(InnerForm)
+```
+
+```ts
+// locales/en.ts
+export default {
+  'errors.required': 'Please enter required fields',
+  'errors.minLength': 'Please enter at least {{length}} characters'
+}
 ```
 
 ## Custom the translate function
