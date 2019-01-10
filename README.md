@@ -13,6 +13,14 @@ Table of Contents
 
 ## Getting started
 
+- Install with `npm`
+
+```sh
+$ npm install formik-validators
+```
+
+- Install with `yarn`
+
 ```sh
 $ yarn add formik-validators
 ```
@@ -20,15 +28,26 @@ $ yarn add formik-validators
 ## Basic usage
 
 ```ts
+// myModule.form.ts
 import validator, { required, minLength, maxLength } from 'formik-validators'
 
+const InnerForm = props => {
+  return (
+    <View>
+      <TextInput
+        {...getFieldProps(props, 'phoneNumber')}
+        name={'phoneNumber'}
+        placeholder={'Enter your phone number'}
+      />
+    </View>
+  )
+}
 const MyForm = withFormik({
-  handleSubmit,
   validate: validator({
     phoneNumber: [
-      required('errors.required'),
-      minLength(8)('errors.minLength'),
-      minLength(10)('errors.minLength')
+      required('errors.phone.required'),
+      minLength(8)('errors.phone.minLength'),
+      maxLength(10)('errors.phone.maxLength')
     ]
   })
 })(InnerForm)
@@ -42,7 +61,7 @@ By default, the translate function would return the same string that you give it
 translateFn = (term, params) => term
 ```
 
-However, you can create your own translate function.
+But you can create your own translate function.
 
 ```ts
 // validator.ts
@@ -57,24 +76,14 @@ export default validator
 ```ts
 // ../../forms/index.ts
 export { default as validator } from './validator'
-export * from './forms.components'
+export * from './forms.components' // i.e TextInput, Checkbox, TextArea,...
 ```
 
 ```ts
 // myModule.form.ts
-import { validators, TextInput } from '../../forms'
+import { validator, TextInput } from '../../forms'
 import { required, minLength, getFieldProps } from 'formik-validators'
-const InnerForm = props => {
-  return (
-    <View>
-      <TextInput
-        {...getFieldProps(props, 'userName')}
-        name={'userName'}
-        placeholder={'Enter user name'}
-      />
-    </View>
-  )
-}
+...
 ```
 
 ```ts
@@ -88,9 +97,9 @@ export default {
 
 ## Add new validation rules
 
-`formik-validators` comes with some basics validation rules, it's still far to be enough for building a real world app.
+`formik-validators` comes with some basics validation rules, but it's not enough for building a real world app.
 
-Despite that, the library make it easy for adding your custom rules
+Despite that, it is easy for adding your custom rules.
 
 Example: add a new rule to check the exact length
 
