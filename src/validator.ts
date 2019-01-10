@@ -1,5 +1,5 @@
 import { getIn } from 'formik'
-import { compose, keys, head, is, map, filter, path, split } from 'ramda'
+import { compose, keys, head, map, filter } from 'ramda'
 import { isString } from 'ramda-adjunct'
 
 type Values = {
