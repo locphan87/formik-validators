@@ -1,4 +1,5 @@
 import { getFieldProps } from '../src/utils'
+
 describe('Utils', () => {
   describe('getFieldProps', () => {
     test('should return correct props', () => {

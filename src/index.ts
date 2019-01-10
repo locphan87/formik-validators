@@ -1,6 +1,9 @@
 import validator from './validator'
+import { TranslateFn } from '../typings'
 
-type TranslateFn = (term: string, params?: object) => string
+export * from './validator'
+export * from './rules'
+export * from './utils'
 
 let t = (term: string, params?: object) => term
 const setTranslateFn = (fn: TranslateFn) => {
@@ -8,6 +11,4 @@ const setTranslateFn = (fn: TranslateFn) => {
 }
 
 export { t, setTranslateFn }
-export * from './rules'
-export * from './utils'
 export default validator
