@@ -2,8 +2,8 @@ import { getFieldProps } from '../src/utils'
 
 describe('Utils', () => {
   describe('getFieldProps', () => {
-    test('should return correct props', () => {
-      const data = {
+    test('should return expected props', () => {
+      const props = {
         values: {
           email: 'foobar@gmail.com'
         },
@@ -15,10 +15,10 @@ describe('Utils', () => {
         handleBlur: jest.fn(),
         handleChange: jest.fn()
       }
-      const actual = getFieldProps(data, 'email')
-      expect(actual.value).toEqual('foobar@gmail.com')
-      expect(actual.touched).toEqual(false)
-      expect(actual.error).toEqual('')
+      const newProps = getFieldProps(props, 'email')
+      expect(newProps.value).toEqual('foobar@gmail.com')
+      expect(newProps.touched).toEqual(false)
+      expect(newProps.error).toEqual('')
     })
   })
 })

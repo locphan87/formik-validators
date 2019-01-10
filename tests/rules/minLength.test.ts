@@ -5,17 +5,18 @@ jest.mock('../../src/index', () => ({
 }))
 
 const KEY = 'min length'
-const ERROR = `min length. 5`
+const MIN_LENGTH = 5
+const ERROR = `min length. ${MIN_LENGTH}`
 
 describe('Rules - minLength', () => {
-  test('should return error', () => {
-    const actual = minLength(5, KEY)({
+  test('should return an error', () => {
+    const actual = minLength(MIN_LENGTH, KEY)({
       value: '1234'
     })
     expect(actual).toEqual(ERROR)
   })
   test('should return no error', () => {
-    const actual = minLength(5, KEY)({
+    const actual = minLength(MIN_LENGTH, KEY)({
       value: '12345'
     })
     expect(actual).toEqual(undefined)

@@ -1,7 +1,7 @@
 import { required } from '../../src/rules'
 
 describe('Rules - required', () => {
-  test('should return error', () => {
+  test('should return an error', () => {
     const actual = required('required')({
       value: ''
     })
