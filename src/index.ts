@@ -1,6 +1,7 @@
 import validator from './validator'
 import { TranslateFn } from '../typings'
 
+export * from '../typings'
 export * from './validator'
 export * from './rules'
 export * from './utils'
