@@ -1,8 +1,24 @@
 # Formik Validators
 
+Reusable field-level form validators for `formik`, support i18n
+
+Table of Contents
+=================
+
+* [Getting started](#getting-started)
+* [Basic usage](#basic-usage)
+* [Custom the translate function](#custom-the-translate-function)
+* [Add new validation rules](#add-new-validation-rules)
+
+## Getting started
+
+```sh
+$ yarn add formik-validators
+```
+
 ## Basic usage
 
-```js
+```ts
 import validator, { required, minLength } from 'formik-validators'
 
 const MyForm = withFormik({
@@ -16,7 +32,16 @@ const MyForm = withFormik({
 })(InnerForm)
 ```
 
+```ts
+// locales/en.ts
+export default {
+  'errors.required': 'Please enter required fields',
+  'errors.minLength': 'Please enter at least {{length}} characters'
+}
+```
+
 ## Custom the translate function
+
 By default, the translate function would return the same string (expect a translation term) that you give it
 `translateFn = (term, params) => term`.
 
@@ -26,9 +51,9 @@ On the other side, you can absolutely create your own translate function.
 
 Example: using I18n.t as a translate function
 
-```js
-// validator.js
-import I18n from 'react-native-i18n'
+```ts
+// validator.ts
+import I18n from 'i18n-js'
 import validator, { setTranslateFn } from 'formik-validators'
 
 setTranslateFn((term, params) => I18n.t(term, params))
@@ -36,22 +61,21 @@ setTranslateFn((term, params) => I18n.t(term, params))
 export default validator
 ```
 
-```js
-// ../../forms/index.js
+```ts
+// ../../forms/index.ts
 export { default as validator } from './validator'
 export * from './forms.components'
 ```
 
-```js
-// myModule.form.js
+```ts
+// myModule.form.ts
 import { validators, TextInput } from '../../forms'
 import { required, minLength, getFieldProps } from 'formik-validators'
 const InnerForm = props => {
-  const fieldProps = getFieldProps(props)
   return (
     <View>
       <TextInput
-        {...fieldProps}
+        {...getFieldProps(props, 'userName')}
         name={'userName'}
         placeholder={'Username'}
       />
@@ -68,7 +92,7 @@ The library make it easy for adding your custom rules as long as they returns a 
 
 Example: add a new rule to check the exact length
 
-```js
+```ts
 const exactLength = (length: number, errorKey: string): RuleFn => ({
   value, values, props
 }) => {
