@@ -35,7 +35,7 @@
     "formik": "1.4.2",
     "jest": "23.6.0",
     "prettier": "1.15.3",
-    "ramda": "^0.25.0",
+    "ramda": "0.26.1",
     "ramda-adjunct": "2.10.0",
     "react": "16.7.0",
     "ts-jest": "23.10.5",
