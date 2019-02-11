@@ -10,7 +10,7 @@ type RuleInput = {
 type RuleOutput = string | void
 type RuleFn = (ruleInput: RuleInput) => RuleOutput
 type Config = {
-  [fieldName: string]: RuleFn[]
+  [fieldName: string]: RuleFn[] | Config
 }
 
 export { TranslateFn, Config, RuleInput, RuleOutput, RuleFn, FormValues }
