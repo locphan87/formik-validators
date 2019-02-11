@@ -1,9 +1,10 @@
 import validator from '../src/validator'
+
 import { required, minLength, maxLength } from '../src/rules'
 
 describe('Validator', () => {
+  const props = {}
   test('should return first error', () => {
-    const props = {}
     const validate = validator({
       email: [required('email is required')],
       phone: [
@@ -53,19 +54,23 @@ describe('Validator', () => {
       identities: [
         {
           id: '',
-          name: ''
+          name: '',
+          dob: '19/12/1989'
         },
         {
           id: '',
-          name: 'Ngo Thanh Tai'
+          name: 'Walter',
+          dob: ''
         },
         {
           id: 'B9891605',
-          name: ''
+          name: '',
+          dob: '19/12/1989'
         },
         {
           id: '024179423',
-          name: 'Ngo Thanh Tai'
+          name: 'Ngo Thanh Tai',
+          dob: ''
         }
       ]
     }
@@ -84,7 +89,75 @@ describe('Validator', () => {
         occupation: [required('occupation is required')]
       }
     })
-    const props = {}
+    expect(validate(step1, props)).toEqual({
+      name: 'name is required',
+      address: {
+        street: 'street is required'
+      },
+      identities: [
+        {
+          id: 'id is required',
+          name: 'id name is required'
+        },
+        {
+          id: 'id is required'
+        },
+        {
+          name: 'id name is required'
+        },
+        {}
+      ]
+    })
+  })
+
+  test('config and values are different', () => {
+    const step1: any = {
+      name: '',
+      address: {
+        street: '',
+        city: 'Saigon'
+      },
+      moreInfo: {
+        age: 18,
+        occupation: 'Programmer'
+      },
+      identities: [
+        {
+          id: '',
+          name: '',
+          dob: ''
+        },
+        {
+          id: '',
+          name: 'Ngo Thanh Tai',
+          dob: '19/12/1989'
+        },
+        {
+          id: 'B9891605',
+          name: '',
+          dob: ''
+        },
+        {
+          id: '024179423',
+          name: 'Ngo Thanh Tai',
+          dob: '19/12/1989'
+        }
+      ]
+    }
+    const validate = validator({
+      name: [required('name is required')],
+      address: {
+        street: [required('street is required')]
+      },
+      identities: {
+        id: [required('id is required')],
+        name: [required('id name is required')]
+      },
+      moreInfo: {
+        age: [required('age is required')],
+        occupation: [required('occupation is required')]
+      }
+    })
     expect(validate(step1, props)).toEqual({
       name: 'name is required',
       address: {
