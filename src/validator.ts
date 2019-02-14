@@ -5,7 +5,8 @@ import { isNonEmptyString, isArray, isObject } from 'ramda-adjunct'
 import { Config, RuleFn, FormValues } from '../typings'
 import {
   removeUndefinedValuesAndEmptyObjects,
-  getValuesBasedOnObjectKeys
+  getValuesBasedOnObjectKeys,
+  removeListEmptyObjects
 } from './utils'
 
 const runRule = (
@@ -63,7 +64,10 @@ const validate = (config: Config, values: FormValues, props: any): Object => {
 const validator = (config: Config) => (values: FormValues, props: any) => {
   const filteredValues: any = getValuesBasedOnObjectKeys(config, values)
   const transformations: any = validate(config, filteredValues, props)
-  return removeUndefinedValuesAndEmptyObjects(
+  return R.compose(
+    removeListEmptyObjects,
+    removeUndefinedValuesAndEmptyObjects,
+    // @ts-ignore
     R.evolve(transformations, filteredValues)
   )
 }

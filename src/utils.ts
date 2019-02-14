@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import { isArray, isObject } from 'ramda-adjunct'
-import { Config, FormValues } from '../typings'
+import { FormValues } from '../typings'
 import { getIn } from 'formik'
 
 const getFieldProps = (props: any, name: string) => ({
@@ -67,7 +67,34 @@ const getValuesBasedOnObjectKeys = (config: Object, result: Object): Object => {
   }, {})
 }
 
+const removeListEmptyObjects = (errors: Object): Object => {
+  return Object.keys(errors).reduce((acc, key) => {
+    const error = errors[key]
+    if (isArray(error)) {
+      const listOfErrors = error.map(removeListEmptyObjects)
+      if (
+        listOfErrors.filter(
+          R.compose(
+            R.not,
+            R.isEmpty
+          )
+        ).length === 0
+      ) {
+        return acc
+      }
+      return R.assoc(key, listOfErrors, acc)
+    }
+
+    if (isObject(error)) {
+      return R.assoc(key, removeListEmptyObjects(error), acc)
+    }
+
+    return R.assoc(key, error, acc)
+  }, {})
+}
+
 export {
+  removeListEmptyObjects,
   removeUndefinedValuesAndEmptyObjects,
   getValuesBasedOnObjectKeys,
   getFieldProps

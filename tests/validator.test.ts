@@ -124,7 +124,7 @@ describe('Validator', () => {
           },
           value: {
             value1: [required('value 1 is required')],
-            value2: [required('value 2 is required')],
+            value2: [required('value 2 is required')]
           }
         }
       }
