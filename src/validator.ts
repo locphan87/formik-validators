@@ -35,10 +35,10 @@ const validate = (config: Config, values: FormValues, props: any): Object => {
     R.reduce((errors, fieldName: string) => {
       const validateConfig: Config = getIn(config, fieldName)
       const value = getIn(values, fieldName)
+      if (isArray(values)) {
+        return values.map((value) => validate(config, value, props))
+      }
       if (isArray(validateConfig)) {
-        if (isArray(values)) {
-          return values.map((value) => validate(config, value, props))
-        }
         return R.assoc(
           fieldName,
           (formValue: string) =>

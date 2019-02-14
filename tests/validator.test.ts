@@ -72,6 +72,29 @@ describe('Validator', () => {
           name: 'Ngo Thanh Tai',
           dob: ''
         }
+      ],
+      checkboxes: [
+        {
+          checkbox: {
+            text: '',
+            value: ''
+          }
+        }
+      ],
+      checkboxes2: [
+        {
+          checkbox: {
+            text: [
+              {
+                text1: ''
+              }
+            ],
+            value: {
+              value1: '',
+              value2: ''
+            }
+          }
+        }
       ]
     }
 
@@ -87,6 +110,23 @@ describe('Validator', () => {
       moreInfo: {
         age: [required('age is required')],
         occupation: [required('occupation is required')]
+      },
+      checkboxes: {
+        checkbox: {
+          text: [required('text 1 is required')],
+          value: [required('value 1 is required')]
+        }
+      },
+      checkboxes2: {
+        checkbox: {
+          text: {
+            text1: [required('text 1 is required')]
+          },
+          value: {
+            value1: [required('value 1 is required')],
+            value2: [required('value 2 is required')],
+          }
+        }
       }
     })
     expect(validate(step1, props)).toEqual({
@@ -106,6 +146,29 @@ describe('Validator', () => {
           name: 'id name is required'
         },
         {}
+      ],
+      checkboxes: [
+        {
+          checkbox: {
+            text: 'text 1 is required',
+            value: 'value 1 is required'
+          }
+        }
+      ],
+      checkboxes2: [
+        {
+          checkbox: {
+            text: [
+              {
+                text1: 'text 1 is required'
+              }
+            ],
+            value: {
+              value1: 'value 1 is required',
+              value2: 'value 2 is required'
+            }
+          }
+        }
       ]
     })
   })
