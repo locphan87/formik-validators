@@ -29,6 +29,9 @@ describe('Utils', () => {
   test('removeListEmptyObjects', () => {
     const errors = {
       name: '',
+      address: {
+        street: '18/21'
+      },
       items: [{}, {}],
       validItems: [
         {
@@ -39,7 +42,7 @@ describe('Utils', () => {
         }
       ]
     }
-    expect(removeListEmptyObjects(errors)).toEqual({ name: '' })
+    expect(removeListEmptyObjects(errors)).toEqual({ name: '', address: { street: '18/21' } })
   })
 
   test('removeUndefinedValuesAndEmptyObjects', () => {

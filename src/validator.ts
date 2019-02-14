@@ -64,12 +64,12 @@ const validate = (config: Config, values: FormValues, props: any): Object => {
 const validator = (config: Config) => (values: FormValues, props: any) => {
   const filteredValues: any = getValuesBasedOnObjectKeys(config, values)
   const transformations: any = validate(config, filteredValues, props)
+  // @ts-ignore
   return R.compose(
     removeListEmptyObjects,
     removeUndefinedValuesAndEmptyObjects,
-    // @ts-ignore
-    R.evolve(transformations, filteredValues)
-  )
+    R.evolve
+  )(transformations, filteredValues)
 }
 
 export default validator
