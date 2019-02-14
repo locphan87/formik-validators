@@ -1,28 +1,75 @@
 import { getIn } from 'formik'
-import { assoc, compose, keys, head, map, filter } from 'ramda'
-import { isNonEmptyString } from 'ramda-adjunct'
+import * as R from 'ramda'
+import { isNonEmptyString, isArray, isObject } from 'ramda-adjunct'
 
-import { Config, RuleInput, RuleOutput, RuleFn, FormValues } from '../typings'
+import { Config, RuleFn, FormValues } from '../typings'
+import {
+  removeUndefinedValuesAndEmptyObjects,
+  getValuesBasedOnObjectKeys,
+  removeListEmptyObjects
+} from './utils'
 
-const validator = (config: Config) => (values: FormValues, props: any) =>
-  keys(config).reduce((errors, _fieldName) => {
-    const fieldName = String(_fieldName)
-    const ruleInput: RuleInput = {
-      values,
-      props,
-      value: getIn(values, fieldName)
+const runRule = (
+  values: FormValues,
+  formValue: string,
+  validateConfig: RuleFn[],
+  props: any
+) => {
+  let errorMessage = undefined
+  validateConfig.find(
+    (rule: RuleFn): boolean => {
+      errorMessage = rule({
+        values,
+        props,
+        value: formValue
+      })
+
+      return isNonEmptyString(errorMessage)
     }
-    const firstError = compose(
-      // @ts-ignore
-      head,
-      // @ts-ignore
-      filter(isNonEmptyString),
-      map((rule: RuleFn): RuleOutput => rule(ruleInput))
-    )(config[fieldName])
+  )
 
-    if (!firstError) return errors
+  return errorMessage
+}
 
-    return assoc(fieldName, firstError, errors)
-  }, {})
+const validate = (config: Config, values: FormValues, props: any): Object => {
+  return R.compose(
+    R.reduce((errors, fieldName: string) => {
+      const validateConfig: Config = getIn(config, fieldName)
+      const value = getIn(values, fieldName)
+      if (isArray(values)) {
+        return values.map((value) => validate(config, value, props))
+      }
+      if (isArray(validateConfig)) {
+        return R.assoc(
+          fieldName,
+          (formValue: string) =>
+            runRule(values, formValue, validateConfig, props),
+          errors
+        )
+      }
+
+      if (isObject(validateConfig)) {
+        return R.assoc(
+          fieldName,
+          validate(validateConfig, value, props),
+          errors
+        )
+      }
+      return errors
+    }, {}),
+    R.keys
+  )(config)
+}
+
+const validator = (config: Config) => (values: FormValues, props: any) => {
+  const filteredValues: any = getValuesBasedOnObjectKeys(config, values)
+  const transformations: any = validate(config, filteredValues, props)
+  // @ts-ignore
+  return R.compose(
+    removeListEmptyObjects,
+    removeUndefinedValuesAndEmptyObjects,
+    R.evolve
+  )(transformations, filteredValues)
+}
 
 export default validator

@@ -1,6 +1,6 @@
 type TranslateFn = (term: string, params?: object) => string
 type FormValues = {
-  [fieldName: string]: string
+  [fieldName: string]: string | FormValues
 }
 type RuleInput = {
   value: string
@@ -10,7 +10,7 @@ type RuleInput = {
 type RuleOutput = string | void
 type RuleFn = (ruleInput: RuleInput) => RuleOutput
 type Config = {
-  [fieldName: string]: RuleFn[]
+  [fieldName: string]: RuleFn[] | Config
 }
 
 export { TranslateFn, Config, RuleInput, RuleOutput, RuleFn, FormValues }
